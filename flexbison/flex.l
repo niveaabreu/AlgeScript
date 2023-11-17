@@ -70,10 +70,6 @@ STRING \"([^\\\"]|\\.)*\"
 "^"              { yyval = strdup(yytext); return POTENCIA; }
 "log"              { yyval = strdup(yytext); return LOG; }
 "raiz"             { yyval = strdup(yytext); return RAIZ; }
-"+"              { yyval = strdup(yytext); return PLUS; }
-"-"              { yyval = strdup(yytext); return MINUS; }
-"*"              { yyval = strdup(yytext); return TIMES; }
-"/"              { yyval = strdup(yytext); return DIVIDE; }
 "="              { yyval = strdup(yytext); return ASSIGN; }
 "!"              { yyval = strdup(yytext); return NOT; }
 [0-9]+           { yyval = strdup(yytext); return NUMERO; }
@@ -84,7 +80,7 @@ STRING \"([^\\\"]|\\.)*\"
 
 "\\\n"           ; /* Ignora quebras de linha precedidas por \ */
 
-\n                { yyval = strdup(yytext); return NEWLINE; }
+\n                { yyval = strdup(yytext); return NOVALINHA; }
 
 .               { yyval = strdup(yytext); printf("%s",yyval); }
 
