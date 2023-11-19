@@ -10,11 +10,11 @@ STATEMENT = ( λ | ASSIGNMENT | CONDICIONAL | MOSTRE | ENQUANTO | VARIAVEL ), "\
 
 ASSIGMENT = IDENTIFIER, "=", REXPRESSION;
 
-VARIAVEL = "variavel", IDENTIFIER, { "inteiro" | "decimal" | "=", EXPRESSION};
+VARIAVEL = "variavel", IDENTIFIER,  ("inteiro" | "decimal") , "=", EXPRESSION;
 
 MOSTRE = "mostre", "(", REXPRESSION, ")";
 
-ENQUANTO = "para", ASSIGMENT, ";", REXPRESSION, ";", ASSIGMENT, BLOCK;
+ENQUANTO = "para", VARIAVEL, ";", REXPRESSION, ";", ASSIGMENT, BLOCK;
 
 CONDICIONAL = "se", REXPRESSION, {"senão", BLOCK|BLOCK};
 
@@ -24,13 +24,13 @@ EXPRESSION = TERM, {("+" | "-" ), TERM};
 
 TERM = POWERS, {("*" | ":"), POWERS };
 
-POWERS = FACTOR, {("^" | RAIZ | LOG ), FACTOR };
+POWERS = FACTOR, {("^"), FACTOR };
 
 RAIZ = "raiz", "(", EXPRESSION, ")";
 
-LOG = "log", NUMBER ,"(", EXPRESSION, ")";
+LOG = "log" ,"(", EXPRESSION, "," , EXPRESSION ")";
 
-FACTOR = (("+" | "-" | "!"), FACTOR | INT |FLOAT | LETTER | MODULO | "(", EXPRESSION, ")" | IDENTIFIER);
+FACTOR = (("+" | "-" | "!"), FACTOR | INT |FLOAT | LETTER | MODULO | LOG | RAIZ | "(", EXPRESSION, ")" | IDENTIFIER);
 
 MODULO = "|", EXPRESSION, "|";
 
@@ -56,8 +56,8 @@ variavel a inteiro = 1
 variavel b inteiro = 1
 variavel c inteiro =-1
 variavel delta decimal = b^2 - 4*a*c
-variavel x1 decimal= (-b + raiz(delta)) : 2a
-variavel x2 decimal= (-b - raiz(delta)) : 2a
+variavel x1 decimal= (-b + raiz(delta)) : 2*a
+variavel x2 decimal= (-b - raiz(delta)) : 2*a
 mostre(x1) #0.618
 mostre(x2) #-1.61
 ```
@@ -87,5 +87,15 @@ $$\log_4(xy) + |x - y|$$
 
 variavel x inteiro = 1
 variavel y inteiro = 4
-mostre(log4(x*y)+|x-y|) #4
+mostre(log(x*y,4)+|x-y|) #4
 ```
+## Para executar Análise Léxica e Sintática
+Em um sistema operacional Linux, instale Flex e Bison, então, dentro da pasta **flexbison**, execute:
+```
+flex flex.l
+bison -d bison.y
+gcc lex.yy.c bison.tab.c -o parser
+./parser < teste.txt
+``
+
+Dessa forma um programa de teste, será analisado pelo executável gerado, e caso respeite as normas gramaticas estabelecidas no EBNF, não deverá retornar nada.
