@@ -91,11 +91,12 @@ mostre(log(x*y,4)+|x-y|) #4
 ```
 ## Para executar Análise Léxica e Sintática
 Em um sistema operacional Linux, instale Flex e Bison, então, dentro da pasta **flexbison**, execute:
+
 ```
 flex flex.l
 bison -d bison.y
 gcc lex.yy.c bison.tab.c -o parser
 ./parser < teste.txt
-``
+```
 
 Dessa forma um programa de teste, será analisado pelo executável gerado, e caso respeite as normas gramaticas estabelecidas no EBNF, não deverá retornar nada.
