@@ -75,11 +75,14 @@ extern int yydebug;
     POTENCIA = 281,
     LOG = 282,
     RAIZ = 283,
-    INTEIRO = 284,
-    DECIMAL = 285,
-    NOVALINHA = 286,
-    IDENTIFIER = 287,
-    STRING = 288
+    SEN = 284,
+    COS = 285,
+    TAN = 286,
+    INTEIRO = 287,
+    DECIMAL = 288,
+    NOVALINHA = 289,
+    IDENTIFIER = 290,
+    STRING = 291
   };
 #endif
 

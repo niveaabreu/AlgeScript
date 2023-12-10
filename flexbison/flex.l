@@ -35,6 +35,9 @@ DIVISAO :
 ASSIGN =
 NOT !
 POTENCIA ^
+SEN sen
+COS cos
+TAN tan
 LOG log 
 RAIZ raiz 
 INTEIRO [0-9]+
@@ -71,6 +74,9 @@ STRING \"([^\\\"]|\\.)*\"
 "^"              { yyval = strdup(yytext); return POTENCIA; }
 "log"              { yyval = strdup(yytext); return LOG; }
 "raiz"             { yyval = strdup(yytext); return RAIZ; }
+"sen"             { yyval = strdup(yytext); return SEN; }
+"cos"             { yyval = strdup(yytext); return COS; }
+"tan"             { yyval = strdup(yytext); return TAN; }
 "="              { yyval = strdup(yytext); return ASSIGN; }
 "!"              { yyval = strdup(yytext); return NOT; }
 [0-9]+           { yyval = strdup(yytext); return INTEIRO; }

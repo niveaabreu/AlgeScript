@@ -28,9 +28,15 @@ POWERS = FACTOR, {("^"), FACTOR };
 
 RAIZ = "raiz", "(", EXPRESSION, ")";
 
+SEN = "sen", "(", EXPRESSION, ")";
+
+COS = "cos", "(", EXPRESSION, ")";
+
+TAN = "tan", "(", EXPRESSION, ")";
+
 LOG = "log" ,"(", EXPRESSION, "," , EXPRESSION ")";
 
-FACTOR = (("+" | "-" | "!"), FACTOR | INT |FLOAT | LETTER | MODULO | LOG | RAIZ | "(", EXPRESSION, ")" | IDENTIFIER);
+FACTOR = (("+" | "-" | "!"), FACTOR | INT |FLOAT | LETTER | MODULO | LOG | SEN | COS | TAN | RAIZ | "(", EXPRESSION, ")" | IDENTIFIER);
 
 MODULO = "|", EXPRESSION, "|";
 
@@ -74,7 +80,7 @@ variavel resultado inteiro = 0
 para variavel i inteiro = 1; i < 11; i = i + 1{
     resultado = resultado + (1+t)^i
 }
-mostre(resultado) #79798
+mostre(resultado) #88572
 ```
 
 * EXEMPLO 3:
@@ -89,6 +95,39 @@ variavel x inteiro = 1
 variavel y inteiro = 4
 mostre(log(x*y,4)+|x-y|) #4
 ```
+
+
+* EXEMPLO 4:
+$$
+\theta = 45°
+,
+\alpha = 30°
+$$
+$$
+x = sin(\theta)
+$$
+$$
+y = cos(\alpha)
+$$
+$$
+f(x,y) = \begin{cases}
+x, & \text{se } x > y \\
+y, & \text{senão}
+\end{cases}
+$$
+
+```python
+variavel theta inteiro = 30
+variavel alpha inteiro = 45
+variavel x decimal = sen(theta)
+variavel y decimal = cos(alpha)
+se x > y{
+    mostre(x)
+} senao {
+    mostre(y)
+}
+```
+
 ## Para executar Análise Léxica e Sintática
 Em um sistema operacional Linux, instale Flex e Bison, então, dentro da pasta **flexbison**, execute:
 
@@ -96,7 +135,24 @@ Em um sistema operacional Linux, instale Flex e Bison, então, dentro da pasta *
 flex flex.l
 bison -d bison.y
 gcc lex.yy.c bison.tab.c -o parser
-./parser < teste.txt
+./parser < teste1.as
+./parser < teste2.as
+./parser < teste3.as
+./parser < teste4.as
+./parser < teste5.as
 ```
 
 Dessa forma um programa de teste, será analisado pelo executável gerado, e caso respeite as normas gramaticas estabelecidas no EBNF, não deverá retornar nada.
+
+## Para executar Análise Semântica e geração de código
+Dentro da pasta **conceitoB**, execute:
+
+```
+python main.py teste1.as
+python main.py teste2.as
+python main.py teste3.as
+python main.py teste4.as
+python main.py teste5.as
+```
+
+Gerando as saídas esperadas.

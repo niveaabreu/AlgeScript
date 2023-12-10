@@ -13,7 +13,7 @@ class Tokenizer:
         self.source =  source
         self.position = position
         self.next =next
-        self.reservadas=["variavel","inteiro","decimal","string","mostre","se","senao","para","raiz","log"]
+        self.reservadas=["variavel","inteiro","decimal","string","mostre","se","senao","para","raiz","log","sen","cos","tan"]
 
     def selectNext(self):
         if(self.position==len(self.source)):
@@ -155,7 +155,6 @@ class SymbolTable:
                raise Exception("Not valid")   
                
 
-            
 class PrePro:
     def __init__(self,code:str) -> None:
         self.code =  code
@@ -315,6 +314,27 @@ class Log(Node):
         exp = self.children[0].Evaluate(ST)[0]
         base =self.children[1].Evaluate(ST)[0] 
         return math.log(exp,base), "float"
+    
+class Sen(Node):
+    def __init__(self,value,children:list) -> None:
+        super().__init__(value,children)
+    def Evaluate(self,ST):
+        degree = self.children[0].Evaluate(ST)[0]
+        return math.sin(math.radians(degree)), "float"
+
+class Cos(Node):
+    def __init__(self,value,children:list) -> None:
+        super().__init__(value,children)
+    def Evaluate(self,ST):
+        degree = self.children[0].Evaluate(ST)[0]
+        return math.cos(math.radians(degree)), "float"
+    
+class Tan(Node):
+    def __init__(self,value,children:list) -> None:
+        super().__init__(value,children)
+    def Evaluate(self,ST):
+        degree = self.children[0].Evaluate(ST)[0]
+        return math.tan(math.radians(degree)), "float"
     
 class Raiz(Node):
     def __init__(self,value,children:list) -> None:
@@ -590,6 +610,30 @@ class Parser:
                 if(tokenizer.next.type == "parendireita"):
                     tokenizer.selectNext()
                     return Raiz(value="raiz",children=[resultado])
+            raise Exception("error")
+        elif(tokenizer.next.value == "sen"):
+            tokenizer.selectNext()
+            if (tokenizer.next.type == "parenesquerda"):
+                resultado=Parser.parseRelExpression(tokenizer)
+                if(tokenizer.next.type == "parendireita"):
+                    tokenizer.selectNext()
+                    return Sen(value="sen",children=[resultado])
+            raise Exception("error")
+        elif(tokenizer.next.value == "cos"):
+            tokenizer.selectNext()
+            if (tokenizer.next.type == "parenesquerda"):
+                resultado=Parser.parseRelExpression(tokenizer)
+                if(tokenizer.next.type == "parendireita"):
+                    tokenizer.selectNext()
+                    return Cos(value="cos",children=[resultado])
+            raise Exception("error")
+        elif(tokenizer.next.value == "tan"):
+            tokenizer.selectNext()
+            if (tokenizer.next.type == "parenesquerda"):
+                resultado=Parser.parseRelExpression(tokenizer)
+                if(tokenizer.next.type == "parendireita"):
+                    tokenizer.selectNext()
+                    return Tan(value="tan",children=[resultado])
             raise Exception("error")
         elif(tokenizer.next.value == "log"):
             tokenizer.selectNext()

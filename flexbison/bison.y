@@ -30,6 +30,9 @@ void yyerror(const char *s);
 %token POTENCIA
 %token LOG
 %token RAIZ
+%token SEN
+%token COS
+%token TAN
 %token INTEIRO
 %token DECIMAL
 %token NOVALINHA
@@ -104,11 +107,20 @@ factor: SOMA factor
       | numero 
       | modulo
       | raiz
+      | sen
+      | cos
+      | tan
       | log
       | PARENESQUERDA expression PARENDIREITA
       ;
 
 raiz: RAIZ PARENESQUERDA expression PARENDIREITA;
+
+sen: SEN PARENESQUERDA expression PARENDIREITA;
+
+cos: COS PARENESQUERDA expression PARENDIREITA;
+
+tan: TAN PARENESQUERDA expression PARENDIREITA;
 
 log: LOG PARENESQUERDA expression VIRGULA expression PARENDIREITA;
 
