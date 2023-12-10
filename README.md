@@ -98,17 +98,21 @@ mostre(log(x*y,4)+|x-y|) #4
 
 
 * EXEMPLO 4:
+  
 $$
 \theta = 45°
 ,
 \alpha = 30°
-$$
+$$    
+
 $$
 x = sin(\theta)
 $$
+
 $$
 y = cos(\alpha)
 $$
+
 $$
 f(x,y) = \begin{cases}
 x, & \text{se } x > y \\
